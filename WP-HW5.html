@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		#map {
+			height: 700px;
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div id="map"></div>
+	<script>
+		function initMap() {
+			var fcu = {lat: 24.181599, lng: 120.645318};
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 14,
+				center: fcu,
+				mapTypeId: 'roadmap'
+			});
+			var marker = new google.maps.Marker({
+				position: fcu,
+				icon: 'FCU.png',
+				map: map
+			});
+			var icons = {
+				postoffice: {icon:'postoffice.png'},
+				gas: {icon:'gas.png'}
+			};
+			var features=[
+				{position : new google.maps.LatLng(24.175283, 120.649135),type: 'postoffice', title: '臺中逢甲郵局', address: '台中市西屯區河南路2段268號', tel: '04 2452 7033'},
+				{position : new google.maps.LatLng(24.176704, 120.637650),type: 'postoffice', title: '台中西屯郵局', address: '台中市西屯區黎明路三段130號', tel: '04 2701 0016'},
+				{position : new google.maps.LatLng(24.183423, 120.618614),type: 'postoffice', title: '台中福安郵局台中69支局', address: '台中市西屯區福順路318號', tel: '04 2463 0618'},
+				{position : new google.maps.LatLng(24.164654, 120.654204),type: 'postoffice', title: '台中何厝郵局', address: '台中市西屯區青海路一段83號', tel: '04 2316 0166'},
+				{position : new google.maps.LatLng(24.156548, 120.652867),type: 'postoffice', title: '台中大隆路郵局', address: '台中市西屯區大隆路60、62號', tel: '04 2320 6379'},
+				{position : new google.maps.LatLng(24.169481, 120.606566),type: 'postoffice', title: '台中工業區郵局台中46支局', address: '台中市西屯區工業區六路10號', tel: '04 2359 2387'},
+				{position : new google.maps.LatLng(24.190528, 120.612205),type: 'postoffice', title: '台中永安郵局', address: '台中市西屯區永安里西屯路三段166之80號', tel: '04 2461 5479'},
+				{position : new google.maps.LatLng(24.179037, 120.601642),type: 'postoffice', title: '東海大學郵局', address: '台中市西屯區台灣大道四段1727號', tel: '04 2359 2748'},
+				{position : new google.maps.LatLng(24.183959, 120.604834),type: 'postoffice', title: '台中榮總郵局台中52支局', address: '台中市西屯區台中港路三段160號', tel: '04 2359 3263'},
+				{position : new google.maps.LatLng(24.192624, 120.623166),type: 'gas', title: '台灣中油', address: '台中市西屯區福雅路300號', tel: '04 2463 2260'},
+				{position : new google.maps.LatLng(24.171350, 120.643926),type: 'gas', title: '台灣中油 青海站', address: '台中市西屯區青海路二段211號', tel: '04 2701 5054'},
+				{position : new google.maps.LatLng(24.171538, 120.659826),type: 'gas', title: '台灣中油', address: '台中市西屯區文心路三段187號', tel: '04 2315 6811'},
+				{position : new google.maps.LatLng(24.162465, 120.628172),type: 'gas', title: '台灣中油', address: '台中市西屯區環中路三段800號', tel: '04 2254 8448'},
+				{position : new google.maps.LatLng(24.183088, 120.614591),type: 'gas', title: '中油', address: '台中市西屯區台灣大道四段1047號', tel: '04 2359 2968'},
+				{position : new google.maps.LatLng(24.200737, 120.656979),type: 'gas', title: '中油加油站', address: '台中市西屯區環中路一段2490號', tel: '04 2426 7111'},
+				{position : new google.maps.LatLng(24.182704, 120.601061),type: 'gas', title: '台灣中油(加盟店)', address: '台中市西屯區台灣大道四段1832號', tel: '04 2359 9998'},
+				{position : new google.maps.LatLng(24.184299, 120.590661),type: 'gas', title: '台灣中油(加盟店)-大度山嘟嘟加油站', address: '台中市西屯區台灣大道五段142號', tel: '04 2359 4311'},
+				{position : new google.maps.LatLng(24.198338, 120.642634),type: 'gas', title: '台灣中油', address: '台中市西屯區廣福路191號', tel: '04 2705 1398'},
+				{position : new google.maps.LatLng(24.202129, 120.654431),type: 'gas', title: '台灣中油中清站', address: '台中市西屯區中清路三段150號', tel: '04 2425 8318'},
+				{position : new google.maps.LatLng(24.174957, 120.604318),type: 'gas', title: '台灣中油', address: '台中市西屯區工業區八路2號', tel: '04 2359 1798'},
+				{position : new google.maps.LatLng(24.201522, 120.670192),type: 'gas', title: '台灣中油', address: '台中市西屯區環中路一段1686號', tel: '04 2425 9911'},
+				{position : new google.maps.LatLng(24.172095, 120.645469),type: 'gas', title: '台灣中油河南路站', address: '台中市西屯區河南路二段341號', tel: '04 2707 3666'},];
+			features.forEach(function (features){
+				var marker = new google.maps.Marker({
+					position: features.position,
+					icon: icons[features.type].icon,
+					map: map
+				});
+				var infowindow = new google.maps.InfoWindow({
+					content: '<div>' + '<h2>' + features.title + '</h2><p>地址:' + features.address + '</p><p>電話:' + features.tel + '</p></div>'
+				});
+				marker.addListener('mouseover', function (features) {
+					infowindow.open(map, marker);
+				});
+				marker.addListener('mouseout', function (features) {
+					infowindow.close();
+				});
+			});
+			var infowindow = new google.maps.InfoWindow({
+				content: '<div>' + '<h2>逢甲大學</h2><p>地址:台中市西屯區文華路100號</p><p>電話:04 2451 7250</p></div>'
+			});
+			marker.addListener('mouseover', function (features) {
+				infowindow.open(map, marker);
+			});
+			marker.addListener('mouseout', function (features) {
+				infowindow.close();
+			});
+		}				
+	</script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR8hOtmI-ycL_NSssS6nbJw1foQZ3m4Ic&callback=initMap">
+	</script>
+</body>
+</html>
